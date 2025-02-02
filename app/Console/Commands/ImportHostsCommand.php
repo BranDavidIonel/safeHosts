@@ -14,7 +14,7 @@ class ImportHostsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'hosts:import {url=https://raw.githubusercontent.com/StevenBlack/hosts/refs/heads/master/alternates/porn/hosts}';
+    protected $signature = 'hosts:import';
     private $urlSearch = '';
 
     /**
@@ -29,8 +29,11 @@ class ImportHostsCommand extends Command
      */
     public function handle()
     {
-        //$this->urlSearch = $this->ask('What is your URL?');
-        $urlSearch = $this->argument('url');
+        //url=https://raw.githubusercontent.com/StevenBlack/hosts/refs/heads/master/alternates/porn/hosts
+        //$urlSearch = $this->argument('url');
+        $urlSearch = $this->ask('What is your URL?');
+        $category = $this->ask('What is your category?');
+        $descriptionCategory = $this->ask('What is your description category?');
         $this->info('Fetching hosts file...');
         // get file
         $response = Http::get($urlSearch);
@@ -48,14 +51,14 @@ class ImportHostsCommand extends Command
         }
 
         //create category/host if don't exist
-        $category = Category::firstOrCreate(['name' => 'porn'], ['description' => 'Pornography blocklist']);
+        $category = Category::firstOrCreate(['name' => $category], ['description' => $descriptionCategory]);
 
         $countsHostsBefore = Host::count();
         $this->info("Importing " . count($blockedDomains) . " domains into the database...");
         foreach ($blockedDomains as $domain) {
             Host::firstOrCreate(
                 ['domain' => $domain], //check domain exist
-                ['category_id' => $category->id, 'source' => $this->argument('url')]
+                ['category_id' => $category->id, 'source' => $urlSearch]
             );
         }
         $countsHostsAfter = Host::count();

@@ -13,11 +13,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        //check exist any user
+        $checkUser = User::where('id', '>', 0)->exists();
+        if (!$checkUser) {
+            User::create([
+                'name' => 'david',
+                'email' => 'admin@yahoo.com',
+                'password' => '$2y$10$8P6MpItCh.V/qFQ7OaqVJe1nbl2l4iFLxcNedXCMtegIcR277AU12'
+            ]);
+        }
     }
 }
