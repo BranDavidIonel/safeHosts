@@ -77,10 +77,19 @@ class GenerateHostsFile extends Command
         foreach ($hosts as $host) {
             $hostsFileContent .= "0.0.0.0 " . $host->domain . "\n";
         }
-
+        //remove old file
+        if (file_exists($fileName)) {
+            unlink($fileName);
+        }
         // Save the file
         file_put_contents($fileName, $hostsFileContent);
 
         $this->info("Hosts file generated successfully at: $fileName");
+        // Suggestion for the user
+        $this->info("⚠️ To copy the file to /etc/hosts, run the following command in your Ubuntu terminal:");
+
+        $this->info("➡️  sudo cp ./storage/app/custom_hosts.txt /etc/hosts");
+
+
     }
 }
