@@ -67,6 +67,7 @@ class GenerateHostsFile extends Command
         $hostsFileContent .= "# Custom host records are listed here.\n";
         foreach ($customHosts as $customHost) {
             $hostsFileContent .= "0.0.0.0 " . $customHost->host->domain . "\n";
+            //$hostsFileContent .= "127.0.0.1 " . $customHost->host->domain . "\n";
         }
         // End of custom records
         $hostsFileContent .= "\n# End of custom host records.\n";
@@ -76,6 +77,7 @@ class GenerateHostsFile extends Command
         // Insert hosts from the `hosts` table
         foreach ($hosts as $host) {
             $hostsFileContent .= "0.0.0.0 " . $host->domain . "\n";
+            //$hostsFileContent .= "127.0.0.1 " . $host->domain . "\n";//make some redirect page for me to other sites ortodox (change focus)
         }
         //remove old file
         if (file_exists($fileName)) {
