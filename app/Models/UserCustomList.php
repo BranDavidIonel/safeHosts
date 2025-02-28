@@ -10,5 +10,10 @@ class UserCustomList extends Model
     public  function host()
     {
         return $this->belongsTo(Host::class);
+
+    }
+    public  function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

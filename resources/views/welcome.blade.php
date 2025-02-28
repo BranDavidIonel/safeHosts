@@ -16,41 +16,50 @@
             <h4>Total Custom Hosts: <strong>{{ $totalCustomHosts }}</strong></h4>
         </div>
     </div>
+    <a href="{{route('custom-list.index')}}" class="btn btn-primary mb-3">Manage Custom Users</a>
+    <div class="row">
+        <!-- Custom User Hosts -->
+        <div class="col-md-6">
+            <h2>Displaying the latest 10 custom hosts</h2>
+            <table class="table table-bordered">
+                <thead class="table-info">
+                <tr>
+                    <th>#</th>
+                    <th>Domain</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach ($customHosts as $index => $custom)
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $custom->host->domain }}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
 
-    <h2>Custom User Hosts</h2>
-    <table class="table table-bordered">
-        <thead class="table-info">
-        <tr>
-            <th>#</th>
-            <th>Domain</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach ($customHosts as $index => $custom)
-            <tr>
-                <td>{{ $index + 1 }}</td>
-                <td>{{ $custom->host->domain }}</td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
+        <!-- All Hosts -->
+        <div class="col-md-6">
+            <h2>Displaying the latest 10 hosts</h2>
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Domain</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach ($hosts as $index => $host)
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $host->domain }}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    <h2>All Hosts</h2>
-    <table class="table table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <th>#</th>
-            <th>Domain</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach ($hosts as $index => $host)
-            <tr>
-                <td>{{ $index + 1 }}</td>
-                <td>{{ $host->domain }}</td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
 </body>
 </html>
