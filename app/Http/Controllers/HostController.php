@@ -15,9 +15,9 @@ class HostController extends Controller
         $totalCustomHosts = UserCustomList::count();
 
         // Get all hosts
-        $hosts = Host::limit(10)->get();
+        $hosts = Host::limit(10)->where('source', '<>', 'manual')->orderBy("id",'desc')->get();
         $customHosts = UserCustomList::with('host')
-                        ->limit(5)
+                        ->limit(10)
                         ->orderBy("id",'desc')->get();
 
         return view('welcome', compact('totalHosts', 'totalCustomHosts', 'hosts', 'customHosts'));
